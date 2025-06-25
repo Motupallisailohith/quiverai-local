@@ -1,3 +1,15 @@
+# Start from the base Ollama image
 FROM ollama/ollama:latest
-# you can pre-pull your model or let Ollama pull on first run
-ENTRYPOINT ["ollama", "serve", "--host", "0.0.0.0", "--port", "11434"]
+
+# Set the OLLAMA_HOST environment variable for Ollama.
+# We'll make it listen on 11435 to match your model.py's default.
+ENV OLLAMA_HOST="0.0.0.0:11435"
+
+# Optional: Pre-pull your model during the build. Highly recommended for faster startup.
+RUN ollama pull qwen3:4b
+
+# Expose the port (good practice for Docker)
+EXPOSE 11435 # <--- Changed to 11435
+
+# Define the command to run when the container starts.
+CMD ["ollama", "serve"]
