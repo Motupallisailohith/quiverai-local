@@ -6,7 +6,9 @@ FROM ollama/ollama:latest
 ENV OLLAMA_HOST="0.0.0.0:11435"
 
 # Optional: Pre-pull your model during the build. Highly recommended for faster startup.
-RUN ollama pull qwen3:4b
+RUN ollama serve & \
+    sleep 1 && \
+    ollama pull qwen3:4b
 
 # Expose the port (good practice for Docker)
 EXPOSE 11435 
