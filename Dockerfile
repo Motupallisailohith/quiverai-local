@@ -1,17 +1,16 @@
-# Dockerfile
-FROM python:3.10-slim
+# syntax=docker/dockerfile:1
+FROM python:3.11-slim
 
+# set working directory
 WORKDIR /app
 
-# Copy & install your Python dependencies
+# install system deps, then python deps
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your entire application
+# now copy the rest of your source
 COPY . .
 
-# Expose the Streamlit port
+# expose & run
 EXPOSE 8501
-
-# Point Streamlit at 0.0.0.0 so it listens on all interfaces
-CMD ["streamlit", "run", "app.py", "--server.address=0.0.0.0", "--server.enableCORS=false"]
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
