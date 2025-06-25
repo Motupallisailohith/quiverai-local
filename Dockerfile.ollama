@@ -9,7 +9,6 @@ ENV OLLAMA_HOST="0.0.0.0:11435"
 RUN ollama pull qwen3:4b
 
 # Expose the port (good practice for Docker)
-EXPOSE 11435 # <--- Changed to 11435
-
+EXPOSE 11435 
 # Define the command to run when the container starts.
 CMD ["ollama", "serve"]
