@@ -1,0 +1,13 @@
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Virtualenv
+.venv/
+
+# Local data
+docs/
+index/
+
+# Environment file (contains your Ollama host, keys, etc)
+.env
