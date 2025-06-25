@@ -4,32 +4,45 @@ import os
 from dotenv import load_dotenv
 
 from config import Config, ModelProvider
-from langchain.llms import Ollama
-# from langchain_groq import Groq  # if you need GROQ support
 
-# Load .env (so OLLAMA_HOST and OLLAMA_CONTEXT_LENGTH are seen)
+# Ollama integration now lives in langchain_community
+from langchain_community.llms.ollama import Ollama 
+# from langchain_groq import Groq  # if/when you want to enable GROQ
+
+# Load OLLAMA_HOST, OLLAMA_CONTEXT_LENGTH, etc.
 load_dotenv()
 
 def get_llm():
     """
     Factory to return a LangChain LLM instance according to Config.MODEL.
-    Ollama now picks up host & context length from env vars:
-      - OLLAMA_HOST      (e.g. http://127.0.0.1:11435)
-      - OLLAMA_CONTEXT_LENGTH (e.g. 4096)
+    Ollama parameters:
+      - model:        your Ollama model name (e.g. "qwen3:4b")
+      - temperature:  Config.MODEL.temperature
+      - base_url:     the Ollama server endpoint (http://host:port) - CORRECTED
+      - num_ctx:      OLLAMA_CONTEXT_LENGTH (optional) - CORRECTED PARAMETER NAME
     """
-    provider   = Config.MODEL.provider
+    provider = Config.MODEL.provider
     model_name = Config.MODEL.name
-    temp       = Config.MODEL.temperature
+    temperature = Config.MODEL.temperature
 
     if provider == ModelProvider.OLLAMA:
-        # Ollama will read OLLAMA_HOST and OLLAMA_CONTEXT_LENGTH from os.environ
-        return Ollama(
-            model=model_name,
-            temperature=temp,
-        )
+        ollama_url = os.getenv("OLLAMA_HOST", "http://localhost:11435")
+        ctx_len = os.getenv("OLLAMA_CONTEXT_LENGTH")
+
+        ollama_params = {
+            "model": model_name,
+            "temperature": temperature,
+            "base_url": ollama_url, # Changed 'url' to 'base_url'
+        }
+        if ctx_len:
+            # Pass context length as 'num_ctx' during initialization
+            ollama_params["num_ctx"] = int(ctx_len)
+
+        llm = Ollama(**ollama_params) # Unpack parameters for initialization
+        return llm
 
     # elif provider == ModelProvider.GROQ:
-    #     return Groq(model=model_name, temperature=temp)
+    #     return Groq(model=model_name, temperature=temperature)
 
     else:
         raise ValueError(f"Unsupported model provider: {provider}")
