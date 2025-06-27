@@ -7,6 +7,7 @@ from config import Config, ModelProvider
 
 # Ollama integration now lives in langchain_community
 from langchain_community.llms.ollama import Ollama 
+from langchain_community.chat_models.ollama import ChatOllama
 # from langchain_groq import Groq  # if/when you want to enable GROQ
 
 # Load OLLAMA_HOST, OLLAMA_CONTEXT_LENGTH, etc.
@@ -26,7 +27,7 @@ def get_llm():
     temperature = Config.MODEL.temperature
 
     if provider == ModelProvider.OLLAMA:
-        ollama_url = os.getenv("OLLAMA_HOST", "http://localhost:11435")
+        ollama_url = os.getenv("OLLAMA_HOST", "http://localhost:11434")
         ctx_len = os.getenv("OLLAMA_CONTEXT_LENGTH")
 
         ollama_params = {
@@ -37,8 +38,10 @@ def get_llm():
         if ctx_len:
             # Pass context length as 'num_ctx' during initialization
             ollama_params["num_ctx"] = int(ctx_len)
+        elif Config.CONTEXT_WINDOW:
+            ollama_params["num_ctx"] = Config.CONTEXT_WINDOW
 
-        llm = Ollama(**ollama_params) # Unpack parameters for initialization
+        llm = ChatOllama(**ollama_params) # Unpack parameters for initialization
         return llm
 
     # elif provider == ModelProvider.GROQ:

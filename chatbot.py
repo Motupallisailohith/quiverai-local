@@ -1,3 +1,4 @@
+
 # chatbot.py
 
 from dataclasses import dataclass
@@ -86,8 +87,8 @@ def _cached_answer(question: str, context: str) -> str:
         chat_history=[],
     )
     # **Use the string form** of the prompt
-    prompt_str = prompt_val.to_string()
-    resp = llm.generate([prompt_str])
+    messages_list = prompt_val.to_messages()
+    resp = llm.generate([messages_list])
     # Most LLM wrappers put the reply in `.generations[0][0].text`
     return resp.generations[0][0].text
 
