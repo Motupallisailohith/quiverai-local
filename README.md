@@ -152,6 +152,3 @@ Pull requests welcome! If you want to extend to ReAct agents, plugins, or new re
 MIT License
 (c) 2025 \[YourName]
 
----
-
-If you want, I can tailor this even more (for Hugging Face Spaces, for GCP, etc.). Just say “Refine for \[target]” and I’ll do it! 🚀
