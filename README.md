@@ -3,17 +3,17 @@
 
 # QuiverAI: Local RAG + Agent Platform with Ollama and Qwen3
 
-QuiverAI is an **end-to-end retrieval-augmented generation (RAG)** and document QA chatbot that combines local document indexing (FAISS or Chroma) with an Ollama-hosted Qwen3 language model. The system is designed for privacy, speed, and easy extensibility — no calls to OpenAI or other cloud models required.
+QuiverAI is an end-to-end retrieval-augmented generation (RAG) and document QA chatbot that combines local document indexing (FAISS or Chroma) with an Ollama-hosted Qwen3 language model. The system is designed for privacy, speed, and easy extensibility — no calls to OpenAI or other cloud models required.
 
 ---
 
 ## ✨ Key Features
 
-* **Local LLM**: runs *Qwen3:4b* on your machine using Ollama
-* **FAISS / Chroma**: supports similarity search over ingested documents
-* **Streamlit UI**: fast document upload + chat experience
-* **Cache Layer**: persistent cache of previous queries and answers
-* **Extensible**: designed to plug in more chains, agents, or tools
+* Local LLM: runs *Qwen3:4b* on your machine using Ollama
+* FAISS / Chroma: supports similarity search over ingested documents
+* Streamlit UI: fast document upload + chat experience
+* Cache Layer: persistent cache of previous queries and answers
+* Extensible: designed to plug in more chains, agents, or tools
 
 ---
 
@@ -21,7 +21,7 @@ QuiverAI is an **end-to-end retrieval-augmented generation (RAG)** and document 
 
 ### 1️⃣ Prerequisites
 
-* Python **3.10+**
+* Python 3.10+
 * [Ollama](https://ollama.com) installed (`ollama serve` must work)
 * Docker (optional, for a fully containerized experience)
 * Sufficient GPU VRAM (Qwen3:4b runs best on a 6–8 GB+ card)
@@ -109,12 +109,12 @@ streamlit run app.py --server.address=0.0.0.0 --server.port=8501
 
 ## 🐳 Docker Deployment
 
-QuiverAI supports Docker deployment to Hugging Face Spaces or your own VPS. A **two-stage Dockerfile** is recommended:
+QuiverAI supports Docker deployment to Hugging Face Spaces or your own VPS. A two-stage Dockerfile is recommended:
 
-1. **Stage 1** pulls the Ollama model in advance
-2. **Stage 2** runs your Streamlit UI with Ollama side-by-side
+1. Stage 1 pulls the Ollama model in advance
+2. Stage 2 runs your Streamlit UI with Ollama side-by-side
 
-**entrypoint.sh** manages ordering (Ollama first, Streamlit second) for consistent start-up.
+entrypoint.sh manages ordering (Ollama first, Streamlit second) for consistent start-up.
 
 ✅ Full instructions are inside `Docker Deployment` doc or the `Dockerfile` itself.
 
@@ -128,14 +128,6 @@ QuiverAI supports Docker deployment to Hugging Face Spaces or your own VPS. A **
 * FAISS for fast semantic search
 * Caching layer for consistent answers
 * System designed with separation of concerns: ingestion, indexing, retrieval, generation
-
----
-
-## 💡 How Recruiters See It
-
-If you describe this in a resume or interview, you could say:
-
-* **“Designed a local RAG platform combining Ollama and Qwen3 with FAISS-based retrieval, Streamlit-based chat UI, and modular caching for near real-time document QA.”**
 
 ---
 
@@ -162,4 +154,4 @@ MIT License
 
 ---
 
-If you want, I can **tailor** this even more (for Hugging Face Spaces, for GCP, etc.). Just say **“Refine for \[target]”** and I’ll do it! 🚀
+If you want, I can tailor this even more (for Hugging Face Spaces, for GCP, etc.). Just say “Refine for \[target]” and I’ll do it! 🚀
